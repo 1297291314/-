@@ -4,7 +4,38 @@
     <image class="gpt_image"  src="{{imageSrc}}" mode="aspectFill" width="50" height="50" aria-label="稍等一下，伴游出门了" bindtap="goToTalk"/>
     <scroll-view scroll-y scroll-top="{{sTop}}" class="chat-content-wrapper {{!showContent?'hidden-conten':''}}">
     <view id='chat-ref' style='margin-bottom:140px'>
-      <view wx:for="{{chatContent}}">
+      <view>
+        <view class='chatTime'>123323</view>
+        <view class='self-wrapper'>
+          <image src='../../assert/key.png' class='self-avatar'></image>
+          <view class='self-text-wrapper'>
+            <view class='self-text'>123333</view>
+          </view>
+          <view class='clr'></view>
+        </view>
+        <view class='self-wrapper' >
+          <image src='../../assert/key.png' class='self-avatar'></image>
+          <view class='self-img-wrapper'>
+            <image class='chat-img' src='../../assert/key.png' mode='widthFix'></image>
+          </view> 
+          <view class='clr'></view>
+        </view>
+
+
+        <view class='other-wrapper' >
+          <view class='other-text-wrapper'>
+            <view class='self-text'>1233</view>
+          </view>
+          <image src='../../assert/key.png' class='other-avatar'></image>
+        </view>
+        <view class='other-wrapper'>
+          <view class='other-image-wrapper'>
+            <image class='chat-img' src='../../assert/key.png' mode='widthFix'></image>
+          </view>
+          <image src='../../assert/key.png' class='other-avatar'></image>
+        </view>
+      </view>
+      <!-- <view wx:for="{{chatContent}}" wx:key="">
         <view class='chatTime' wx:if="{{item['.value']['time']}}">{{item['.value']['time'] }}</view>
         <view class='self-wrapper' wx:if='{{item[".value"]["sid"]==sid&&item[".value"]["msg"]==1}}'>
           <image src='{{seller.avatar}}' class='self-avatar'></image>
@@ -17,7 +48,7 @@
           <image src='{{seller.avatar}}' class='self-avatar'></image>
           <view class='self-img-wrapper'>
             <image class='chat-img' src='{{item[".value"]["url"]}}' mode='widthFix'></image>
-          </view>
+          </view> 
           <view class='clr'></view>
         </view>
 
@@ -34,20 +65,21 @@
           </view>
           <image src='{{item[".value"]["avatar"]}}' class='other-avatar'></image>
         </view>
-      </view>
+      </view> -->
     </view>
   </scroll-view>
 </view>
 <view class='chat-wrapper'>
   <view class='chat-container'>
     <view class='voice-container'>
-        <view catchtap='submitMessage' class='voice-handle'>
-        <view  class='voice-font'></view>
+        <view catchtap='speakChange' class='voice-handle'>
+          <view hidden="{{!speakFlag}}"  class='voice-font'></view>
+          <view hidden="{{speakFlag}}" class='keyboard-font'></view>
       </view>
     </view>
     <view class='input-container'>
-      <input style="display: none;" bindinput="bindReplaceInput" bindfocus='hideFlag' value="{{content}}" placeholder="请输入" placeholder-style='font-size:32rpx' />
-      <button>按住 说话</button>
+      <input hidden="{{speakFlag}}" bindinput="bindReplaceInput" bindfocus='hideFlag' value="{{content}}" placeholder="请输入" placeholder-style='font-size:32rpx' />
+      <button bindtouchstart="record" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" hidden="{{!speakFlag}}">按住 说话</button>
     </view>
     <view class='submit-container'>
       <!-- <view wx:if="{{content==''}}" class='icon-addition' catchtap='showFlag'></view> -->
