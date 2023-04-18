@@ -41,12 +41,13 @@
 <view class='chat-wrapper'>
   <view class='chat-container'>
     <view class='voice-container'>
-        <view catchtap='submitMessage' class='submit-handle'>
+        <view catchtap='submitMessage' class='voice-handle'>
         <view  class='voice-font'></view>
       </view>
     </view>
     <view class='input-container'>
-      <input bindinput="bindReplaceInput" bindfocus='hideFlag' value="{{content}}" placeholder="请输入" placeholder-style='font-size:32rpx' />
+      <input style="display: none;" bindinput="bindReplaceInput" bindfocus='hideFlag' value="{{content}}" placeholder="请输入" placeholder-style='font-size:32rpx' />
+      <button>按住 说话</button>
     </view>
     <view class='submit-container'>
       <!-- <view wx:if="{{content==''}}" class='icon-addition' catchtap='showFlag'></view> -->
