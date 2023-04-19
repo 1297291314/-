@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/GPT/GPT",
     "pages/logs/logs"
+    
   ],
+  "requiredBackgroundModes": ["audio", "location"],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",

@@ -37,9 +37,16 @@ Page({
           url:'123'
         }
       }
-    ]
+    ],
+
+    audioContext:null
+  },
+  onLoad:function(){
+    this.setData({audioContext:wx.createInnerAudioContext()})
   },
   onUnload: function () {
+    // 页面卸载
+    this.data.audioContext && this.data.audioContext.stop()
   },
   speakChange: function(){
     this.setData({
@@ -166,9 +173,15 @@ stop: function () {
 
   },
   submitMessage() {
-    console.log(this.data.content)
+    if(!this.data.content)return;
+    this.data.audioContext.src=`https://fanyi.sogou.com/reventondc/synthesis?text=${encodeURI(this.data.content)}&lang=zh-CHS&from=translateweb&speaker=6`
+    this.data.audioContext.play()
     wx.request({
       url: 'https://fanyi.sogou.com/reventondc/synthesis?text=%E4%BD%A0%E5%A5%BD%E5%95%8A&speed=1&lang=zh-CHS&from=translateweb&speaker=6',
+      method: 'GET',
+      success(res){
+        console.log(res)
+      }
     })
   },
   showFlag() {
