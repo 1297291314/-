@@ -2,8 +2,7 @@
   "pages":[
     "pages/index/index",
     "pages/GPT/GPT",
-    "pages/logs/logs"
-    
+    "pages/logs/logs" 
   ],
   "requiredBackgroundModes": ["audio", "location"],
   "window":{

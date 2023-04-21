@@ -29,17 +29,26 @@ Page({
     content: "", // 内容
     chatContent:[
       {
-        ".value":{
-          sid:2,
-          uid:3,
-          message:'1233322',
-          avatar:'123',
-          url:'123'
-        }
-      }
+        name: 'GTP',
+        src:'../../assert/key.png',
+        content: '我是GTP,有什么可以帮您的嘛',
+        userOrGTPflag:'0', // 0 是 GTP，1是用户
+        group:'0'
+      },
+      // {
+      //   name: 'user',
+      //   src:'../../assert/key.png',
+      //   content: '',
+      //   userOrGTPflag:'1', // 0 是 GTP，1是用户
+      // }
     ],
-
+    messageFocus:false,
     audioContext:null
+  },
+  goToTalk:function(){
+    this.setData({
+      messageFocus: true
+    })
   },
   onLoad:function(){
     this.setData({audioContext:wx.createInnerAudioContext()})
@@ -172,17 +181,46 @@ stop: function () {
   hideFlag(){
 
   },
+  bindInputBlur(){
+    // this.setData({
+    //   messageFocus: false
+    // })
+  },
   submitMessage() {
-    if(!this.data.content)return;
+    if(!this.data.content)return; 
+    let chartContent = this.data.chatContent;
+    chartContent.push(
+      {
+        name: 'user',
+        src:'../../assert/key.png',
+        content: this.data.content,
+        userOrGTPflag:'1', // 0 是 GTP，1是用户
+        group:1
+      }
+    )
+    this.setData({
+      content: '',
+      messageFocus: true
+    })
+    chartContent.push(
+      {
+        name: 'GTP',
+        src:'../../assert/key.png',
+        content: '我是GTP',
+        userOrGTPflag:'0', // 0 是 GTP，1是用户
+        group:1
+      }
+    )
+    this.setData({chatContent:chartContent})
     this.data.audioContext.src=`https://fanyi.sogou.com/reventondc/synthesis?text=${encodeURI(this.data.content)}&lang=zh-CHS&from=translateweb&speaker=6`
     this.data.audioContext.play()
-    wx.request({
-      url: 'https://fanyi.sogou.com/reventondc/synthesis?text=%E4%BD%A0%E5%A5%BD%E5%95%8A&speed=1&lang=zh-CHS&from=translateweb&speaker=6',
-      method: 'GET',
-      success(res){
-        console.log(res)
-      }
-    })
+    // wx.request({
+    //   url: 'https://fanyi.sogou.com/reventondc/synthesis?text=%E4%BD%A0%E5%A5%BD%E5%95%8A&speed=1&lang=zh-CHS&from=translateweb&speaker=6',
+    //   method: 'GET',
+    //   success(res){
+    //     console.log(res)
+    //   }
+    // })
   },
   showFlag() {
   }

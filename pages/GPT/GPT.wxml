@@ -1,39 +1,51 @@
 <!--pages/GPT/GPT.wxml-->
 <view class="page-container">
     <!-- <view class="text">GPT</view> -->
-    <image class="gpt_image"  src="{{imageSrc}}" mode="aspectFill" width="50" height="50" aria-label="稍等一下，伴游出门了" bindtap="goToTalk"/>
+    <view class="image-container" style="visibility: hidden;">
+      <image class="gpt_image"  src="{{imageSrc}}" mode="aspectFill" width="50" height="50"/>
+    </view>
+    <view class="image-container fixed-image">
+      <image class="gpt_image"  src="{{imageSrc}}" mode="aspectFill" width="50" height="50" aria-label="稍等一下，伴游出门了" bindtap="goToTalk"/>
+    </view>
     <scroll-view scroll-y scroll-top="{{sTop}}" class="chat-content-wrapper {{!showContent?'hidden-conten':''}}">
-    <view id='chat-ref' style='margin-bottom:140px'>
+    <view id='chat-ref' style='margin-bottom:80rpx'>
       <view>
-        <view class='chatTime'>123323</view>
-        <view class='self-wrapper'>
+        <view wx:for='{{chatContent}}' wx:key="{{index}}" class='{{item.userOrGTPflag==="0"?"other-wrapper":"self-wrapper"}}'>
+          <image src='{{item.src}}' class='{{item.userOrGTPflag==="0"?"other-avatar":"self-avatar"}}'></image>
+          <view class='{{item.userOrGTPflag==="0"?"other-text-wrapper":"self-text-wrapper"}}'>
+            <view class='{{item.userOrGTPflag==="0"?"other-text":"self-text"}}'>{{item.content}}</view>
+          </view>
+          <view class='clr'></view>
+        </view>
+        <!-- <view class='chatTime'>123323</view> -->
+        <!-- <view class='self-wrapper'>
           <image src='../../assert/key.png' class='self-avatar'></image>
           <view class='self-text-wrapper'>
             <view class='self-text'>123333</view>
           </view>
           <view class='clr'></view>
-        </view>
-        <view class='self-wrapper' >
+        </view> -->
+        <!-- <view class='self-wrapper' >
           <image src='../../assert/key.png' class='self-avatar'></image>
           <view class='self-img-wrapper'>
             <image class='chat-img' src='../../assert/key.png' mode='widthFix'></image>
           </view> 
           <view class='clr'></view>
-        </view>
+        </view> -->
 
 
-        <view class='other-wrapper' >
+        <!-- <view class='other-wrapper' >
           <view class='other-text-wrapper'>
-            <view class='self-text'>1233</view>
+            <view class='self-text'>1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快1233大幅加快分解的开发进度可否尽快答复尽快</view>
           </view>
           <image src='../../assert/key.png' class='other-avatar'></image>
-        </view>
-        <view class='other-wrapper'>
+        </view> -->
+        <!-- <view class='other-wrapper'>
           <view class='other-image-wrapper'>
             <image class='chat-img' src='../../assert/key.png' mode='widthFix'></image>
           </view>
           <image src='../../assert/key.png' class='other-avatar'></image>
-        </view>
+        </view> -->
       </view>
       <!-- <view wx:for="{{chatContent}}" wx:key="">
         <view class='chatTime' wx:if="{{item['.value']['time']}}">{{item['.value']['time'] }}</view>
@@ -68,7 +80,7 @@
       </view> -->
     </view>
   </scroll-view>
-</view>
+
 <view class='chat-wrapper'>
   <view class='chat-container'>
     <view class='voice-container'>
@@ -78,7 +90,7 @@
       </view>
     </view>
     <view class='input-container'>
-      <input hidden="{{speakFlag}}" bindinput="bindReplaceInput" bindfocus='hideFlag' value="{{content}}" placeholder="请输入" placeholder-style='font-size:32rpx' />
+      <input hidden="{{speakFlag}}" adjust-position="{{false}}" bindinput="bindReplaceInput" bindfocus='hideFlag' value="{{content}}" focus="{{messageFocus}}" bindblur="bindInputBlur" placeholder="请输入" placeholder-style='font-size:32rpx' />
       <button bindtouchstart="record" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" hidden="{{!speakFlag}}">按住 说话</button>
     </view>
     <view class='submit-container'>
@@ -94,3 +106,4 @@
     </view>
   </view> -->
   </view>
+</view>

@@ -1,7 +1,11 @@
 /* pages/GPT/GPT.wxss */
 .page-container{
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
 }
+
 .gpt_image{
     display: block;
     margin: 20px auto;
@@ -16,14 +20,7 @@ page {
   
   
   
-  .chat-wrapper {
-    position: fixed;
-    float: left;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 999999;
-  }
+
   
   .chat-container {
     position: relative;
@@ -451,5 +448,41 @@ page {
     background-size:56rpx 56rpx;
 
   }
+  .page-container{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top:0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+  .image-container{
+    flex: 0 0 auto;
+  }
+  .image-container.fixed-image{
+    
+    position: fixed;
+    float: left;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999999;
+  }
+  .chat-wrapper {
+    flex: 0 0 auto;
+    /* position: fixed;
+    float: left;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999999; */
+  }
   
+  .chat-content-wrapper{
+    flex:1;
+    overflow-y: auto;
+    margin:0;
+  }
   
