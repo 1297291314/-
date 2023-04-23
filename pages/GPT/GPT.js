@@ -33,7 +33,8 @@ Page({
         src:'../../assert/key.png',
         content: '我是GTP,有什么可以帮您的嘛',
         userOrGTPflag:'0', // 0 是 GTP，1是用户
-        group:'0'
+        group:'0',
+        id:'0'
       },
       // {
       //   name: 'user',
@@ -43,7 +44,8 @@ Page({
       // }
     ],
     messageFocus:false,
-    audioContext:null
+    audioContext:null,
+    keyboardHeight:0  //键盘高度
   },
   goToTalk:function(){
     this.setData({
@@ -52,6 +54,21 @@ Page({
   },
   onLoad:function(){
     this.setData({audioContext:wx.createInnerAudioContext()})
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {}
+          })
+        }
+      }
+    });
+    wx.onKeyboardHeightChange(res => {
+      this.setData({
+        keyboardHeight: res.height
+      });
+    })
   },
   onUnload: function () {
     // 页面卸载
@@ -181,38 +198,52 @@ stop: function () {
   hideFlag(){
 
   },
+  onKeyboardHeightChange(){
+    
+    
+  },
   bindInputBlur(){
     // this.setData({
     //   messageFocus: false
     // })
+    this.setData({
+      keyboardHeight: 0
+    });
   },
-  submitMessage() {
-    if(!this.data.content)return; 
-    let chartContent = this.data.chatContent;
-    chartContent.push(
+  submitMessage(e) {
+    if(!this.data.content){
+      return;
+    } 
+
+    let chatContent = this.data.chatContent;
+    chatContent.push(
       {
         name: 'user',
         src:'../../assert/key.png',
         content: this.data.content,
         userOrGTPflag:'1', // 0 是 GTP，1是用户
-        group:1
+        group:1,
+        id: chatContent.length+''
       }
     )
-    this.setData({
-      content: '',
-      messageFocus: true
-    })
-    chartContent.push(
+    
+    chatContent.push(
       {
         name: 'GTP',
         src:'../../assert/key.png',
         content: '我是GTP',
         userOrGTPflag:'0', // 0 是 GTP，1是用户
-        group:1
+        group:1,
+        id:chatContent.length+''
       }
     )
-    this.setData({chatContent:chartContent})
+    this.setData({chatContent:chatContent})
     this.data.audioContext.src=`https://fanyi.sogou.com/reventondc/synthesis?text=${encodeURI(this.data.content)}&lang=zh-CHS&from=translateweb&speaker=6`
+    this.setData({
+      content: '',
+      sTop: this.data.chatContent.length*100+600,
+      messageFocus: true
+    })
     this.data.audioContext.play()
     // wx.request({
     //   url: 'https://fanyi.sogou.com/reventondc/synthesis?text=%E4%BD%A0%E5%A5%BD%E5%95%8A&speed=1&lang=zh-CHS&from=translateweb&speaker=6',

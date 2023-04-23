@@ -90,9 +90,10 @@ page {
     text-align: center;
     height: 70rpx;
     line-height: 70rpx;
+    background-color: #eee;
   }
   
-  .submit-container .submit-handle {
+ .submit-handle {
     position: relative;
     width: 140rpx;
     font-size: 30rpx;
@@ -484,5 +485,12 @@ page {
     flex:1;
     overflow-y: auto;
     margin:0;
+  }
+  .input-box{
+    padding-right: 140rpx;flex:1 1 auto;height:70rpx;
+    position: relative;
+  }
+  .bottom-wrapper{
+    flex: 0 0 0;
   }
   

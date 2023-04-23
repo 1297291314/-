@@ -10,7 +10,7 @@
     <scroll-view scroll-y scroll-top="{{sTop}}" class="chat-content-wrapper {{!showContent?'hidden-conten':''}}">
     <view id='chat-ref' style='margin-bottom:80rpx'>
       <view>
-        <view wx:for='{{chatContent}}' wx:key="{{index}}" class='{{item.userOrGTPflag==="0"?"other-wrapper":"self-wrapper"}}'>
+        <view wx:for='{{chatContent}}' wx:key='id' class='{{item.userOrGTPflag==="0"?"other-wrapper":"self-wrapper"}}'>
           <image src='{{item.src}}' class='{{item.userOrGTPflag==="0"?"other-avatar":"self-avatar"}}'></image>
           <view class='{{item.userOrGTPflag==="0"?"other-text-wrapper":"self-text-wrapper"}}'>
             <view class='{{item.userOrGTPflag==="0"?"other-text":"self-text"}}'>{{item.content}}</view>
@@ -90,13 +90,19 @@
       </view>
     </view>
     <view class='input-container'>
-      <input hidden="{{speakFlag}}" adjust-position="{{false}}" bindinput="bindReplaceInput" bindfocus='hideFlag' value="{{content}}" focus="{{messageFocus}}" bindblur="bindInputBlur" placeholder="请输入" placeholder-style='font-size:32rpx' />
+      <!-- bindkeyboardheightchange='onKeyboardHeightChange'  -->
+      <view class="input-box"  hidden="{{speakFlag}}">
+        <input   adjust-position="{{false}}" bindinput="bindReplaceInput" bindfocus='onKeyboardHeightChange' value="{{content}}" focus="{{messageFocus}}" bindblur="bindInputBlur" placeholder="请输入" placeholder-style='font-size:32rpx' >
+        <view class='submit-container' style="position: absolute; z-index: 999;right: 0;top: 0; overflow: hidden;">
+          <button bindtap='submitMessage' style="width: 140rpx;margin: 0 0 0 15rpx;" class='submit-handle'>发送</button>
+        </view>
+        </input>
+      </view>
       <button bindtouchstart="record" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" hidden="{{!speakFlag}}">按住 说话</button>
     </view>
-    <view class='submit-container'>
-      <!-- <view wx:if="{{content==''}}" class='icon-addition' catchtap='showFlag'></view> -->
-        <view catchtap='submitMessage' class='submit-handle'>发送</view>
-      </view>
+    <!-- <view class='submit-container' style="visibility: hidden;">
+        <button catchtap='submitMessage' class='submit-handle'>发送</button>
+      </view> -->
   </view>
   <!-- <view class='media-container'>
   
@@ -106,4 +112,5 @@
     </view>
   </view> -->
   </view>
+  <view class='bottom-wrapper' style="flex-basis: {{keyboardHeight+'px'}}"></view>
 </view>
